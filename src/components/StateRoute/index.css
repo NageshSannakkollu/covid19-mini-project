@@ -1,0 +1,35 @@
+.individual-state-route-main-container {
+  background-color: #161625;
+  color: #faf5f9;
+  height: 100vh;
+}
+.state-name-tested-details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 80px;
+}
+.state-name-last-updated-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  line-height: 0px;
+}
+.main-state-name {
+  color: #0ea5e9;
+  background-color: #0284c729;
+  padding: 3px 5px;
+  text-align: center;
+  border-radius: 15px;
+}
+.total-test-cases {
+  font-size: 24px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.tested-tile {
+  color: #94a3b8;
+  align-self: flex-end;
+  font-size: 15px;
+}

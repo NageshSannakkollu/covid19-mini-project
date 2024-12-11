@@ -1,0 +1,172 @@
+.main-container {
+  background-color: #161625;
+  color: #ffffff;
+}
+
+.main-home-container {
+  padding: 0px 150px;
+}
+
+/* Cards-State-wise-Data-Container */
+/* .home-cards-state-details-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* Search Input */
+.search-input-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search-icon-input-container {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border: 1px solid #171f4614;
+  background-color: #2f2f43;
+  padding: 0px 40px;
+  width: 80%;
+  margin-top: 50px;
+  border-radius: 6px;
+}
+@media screen and (max-width: 767px) {
+  .search-icon-input-container {
+    width: 90%;
+    height: 50px;
+  }
+}
+.search-icon {
+  height: 24px;
+  width: 24px;
+  margin-right: 15px;
+}
+.search-input {
+  width: 90%;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border: 0px;
+  color: #fafafa;
+}
+
+/* Search Suggestions Container */
+.search-suggestion-main-container {
+  border: 1px solid #faf5f9;
+  padding: 3px 20px;
+  border-radius: 8px;
+}
+
+.suggestions-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  margin-bottom: 10px;
+}
+.state-code-suggestion-container {
+  display: flex;
+  align-items: center;
+  background-color: #1cd4d429;
+  padding: 0px 20px;
+  border-radius: 8px;
+}
+.state-code {
+  font-weight: 600;
+  font-size: 13px;
+  color: #facc15;
+  margin-right: 10px;
+}
+
+/* Loader COntainer */
+.loader-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+/* Covid Cards  */
+.covid19-home-cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.covid19-home-inside-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  width: 90%;
+}
+
+.confirm-cases-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ff073a;
+}
+.active-card {
+  color: #007bff;
+}
+.recover-card {
+  color: #28a745;
+}
+.decease-card {
+  color: #6c757d;
+}
+
+/* State wise Data Container */
+.state-table-list-each-item-container {
+  border: 1px solid #faf5f9;
+  padding: 0px 30px;
+  border-radius: 8px;
+  background-color: #1e1e30;
+  margin-top: 60px;
+}
+
+.state-tables-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.state-ascending-descending-container {
+  display: flex;
+  align-items: center;
+}
+.asc-dsc-buttons {
+  cursor: pointer;
+  outline: none;
+  border: 0px;
+  background-color: transparent;
+}
+.state-name-title {
+  color: #f8fafc;
+  font-size: 16px;
+  font-weight: 700;
+}
+.state-name {
+  width: 20%;
+}
+.confirm-numbers {
+  width: 10%;
+}
+
+.un-ordered-state-list-container {
+  margin-left: 0px;
+  padding-left: 0px;
+}

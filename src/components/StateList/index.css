@@ -1,0 +1,35 @@
+.state-list-items-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.state-name-list {
+  width: 20%;
+}
+.cases-container {
+  width: 9%;
+}
+.confirmed-color {
+  color: #ff073a;
+}
+.active-color {
+  color: #007bff;
+}
+.recover-color {
+  color: #28a745;
+}
+.decease-color {
+  color: #6c757d;
+}
+.population-color {
+  color: #94a3b8;
+}
+
+/* Link Item */
+.link-item {
+  text-decoration: none;
+  color: #faf5f9;
+  width: 20%;
+}
