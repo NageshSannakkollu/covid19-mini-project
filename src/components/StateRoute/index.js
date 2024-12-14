@@ -1,7 +1,10 @@
 import {Component} from 'react'
+import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
 import StateCards from '../StateCards'
+import TopDistrictCard from '../TopDistrictCard'
+import Charts from '../Charts'
 import './index.css'
 
 const statesList = [
@@ -165,7 +168,9 @@ class StateRoute extends Component {
     stateTotalTested: 0,
     stateDate: '',
     stateName: '',
-    category: 'Confirmed',
+    id: '',
+    defaultCategory: 'Confirmed',
+    topDistrictsListData: [],
   }
 
   componentDidMount() {
@@ -176,7 +181,7 @@ class StateRoute extends Component {
     const {match} = this.props
     const {params} = match
     const {stateCode} = params
-    console.log('ID:', stateCode)
+    // console.log('ID:', stateCode)
     this.setState({apiStatus: apiConstants.inProgress})
 
     const apiUrl = 'https://apis.ccbp.in/covid19-state-wise-data'
@@ -184,7 +189,7 @@ class StateRoute extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok) {
       const responseData = await response.json()
-      console.log(responseData[stateCode])
+      //   console.log(responseData[stateCode])
       const stateData = responseData[stateCode]
       const totalTested = responseData[stateCode].total.tested
       const checkStateCode = statesList.filter(
@@ -192,8 +197,7 @@ class StateRoute extends Component {
       )
       const getStateName = checkStateCode[0].state_name
       const getDate = new Date(responseData[stateCode].meta.last_updated)
-
-      console.log(getStateName, getDate)
+      const topDistrictList = stateData.districts
       const months = [
         'Jan',
         'Feb',
@@ -211,12 +215,14 @@ class StateRoute extends Component {
       const formattedDate = `last update on ${
         months[getDate.getMonth()]
       } ${getDate.getDate()} ${getDate.getFullYear()}.`
-      console.log(formattedDate)
+      //   console.log(formattedDate)
       this.setState({
-        finalStateData: stateData,
+        finalStateData: [stateData],
         stateTotalTested: totalTested,
         stateDate: formattedDate,
+        id: stateCode,
         stateName: getStateName,
+        topDistrictsListData: topDistrictList,
         apiStatus: apiConstants.success,
       })
     } else {
@@ -224,17 +230,141 @@ class StateRoute extends Component {
     }
   }
 
+  stateCategoryValue = value => {
+    this.setState({defaultCategory: value})
+  }
+
   getStateWiseCards = () => {
-    const {finalStateData} = this.state
+    const {finalStateData, defaultCategory} = this.state
+    console.log('finalStateData:', finalStateData)
     return (
-      <div>
-        <StateCards specificStateCardDetails={finalStateData.total} />
+      <ul className="state-cards-main-container">
+        {finalStateData.map(eachData => (
+          <StateCards
+            specificStateCardDetails={eachData.total}
+            stateCategoryValue={this.stateCategoryValue}
+            activeCategory={defaultCategory}
+            key={eachData}
+          />
+        ))}
+      </ul>
+    )
+  }
+
+  getStateTopDistrictData = () => {
+    const {topDistrictsListData, defaultCategory} = this.state
+    // console.log('topDistrictsListData:', topDistrictsListData)
+    const topDistricts = Object.keys(topDistrictsListData)
+    const lowerCategory = defaultCategory.toLowerCase()
+    const dataElement = topDistricts.map(eachItem => ({
+      stateDistrictName: eachItem,
+      stateDistrictValue: topDistrictsListData[eachItem].total[lowerCategory],
+    }))
+    dataElement.sort((a, b) => b.stateDistrictValue - a.stateDistrictValue)
+
+    const stateDistrictActive = topDistricts.map(eachItem => ({
+      stateDistrictName: eachItem,
+      stateDistrictValue:
+        topDistrictsListData[eachItem].total.confirmed -
+        (topDistrictsListData[eachItem].total.recovered +
+          topDistrictsListData[eachItem].total.deceased)
+          ? topDistrictsListData[eachItem].total.confirmed -
+            (topDistrictsListData[eachItem].total.recovered +
+              topDistrictsListData[eachItem].total.deceased)
+          : 0,
+    }))
+
+    stateDistrictActive.sort(
+      (a, b) => b.stateDistrictValue - a.stateDistrictValue,
+    )
+
+    if (lowerCategory === 'active') {
+      return stateDistrictActive
+    }
+    return dataElement
+  }
+
+  getStateTopDistricts = () => {
+    const topDistrictData = this.getStateTopDistrictData()
+    return (
+      <div className="top-districts-main-container">
+        <h2 className="top-districts-title">Top Districts</h2>
+        <ul
+          className="top-districts-main-list-container"
+          testid="topDistrictsUnorderedList"
+        >
+          {topDistrictData.map(eachItem => (
+            <TopDistrictCard
+              topDistrictName={eachItem.stateDistrictName}
+              topDistrictValue={eachItem.stateDistrictValue}
+              key={eachItem.stateDistrictName}
+            />
+          ))}
+        </ul>
       </div>
     )
   }
 
+  getGraphsData = () => {
+    const {defaultCategory, id} = this.state
+    return (
+      <div testid="lineChartsContainer" className="graphs-main-container">
+        <Charts category={defaultCategory.toLowerCase()} stateCode={id} />
+      </div>
+    )
+  }
+
+  renderStateLoadingView = () => (
+    <div className="loader-container" testid="stateDetailsLoader">
+      <Loader type="Tai Spin" color="#faf5f9" height={50} width={50} />
+    </div>
+  )
+
+  renderStateSuccessView = () => (
+    <div className="state-wise-card-top-districts-graphs-container">
+      {this.getStateWiseCards()}
+      {this.getStateTopDistricts()}
+      {this.getGraphsData()}
+    </div>
+  )
+
+  renderStateFailureView = () => (
+    <div className="not-found-main-container">
+      <div className="not-found-inside-container">
+        <img
+          src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1734152776/Group_7484_gmjzmo.png"
+          alt="not found"
+          className="not-found-image"
+        />
+        <h2>Page Not Found</h2>
+        <p>
+          we’re sorry, the page you requested could not be found Please go back
+          to the homepage
+        </p>
+        <button type="button" className="home-button">
+          Home
+        </button>
+      </div>
+    </div>
+  )
+
+  renderStateWiseMainData = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiConstants.success:
+        return this.renderStateSuccessView()
+      case apiConstants.inProgress:
+        return this.renderStateLoadingView()
+      case apiConstants.failure:
+        return this.renderStateFailureView()
+      default:
+        return null
+    }
+  }
+
   render() {
-    const {stateTotalTested, stateName, stateDate} = this.state
+    const {stateTotalTested, stateName, stateDate, defaultCategory} = this.state
+    // console.log('defaultCata:', defaultCategory)
     return (
       <div className="individual-state-route-main-container">
         <Header />
@@ -248,7 +378,14 @@ class StateRoute extends Component {
             <p className="total-test-cases">{stateTotalTested}</p>
           </div>
         </div>
-        <div>{this.getStateWiseCards()}</div>
+        <div
+          className="state-wise-data-main-container"
+          testid="stateWiseCovidDataTable"
+        >
+          <div className="state-wise-data-main-container">
+            {this.renderStateWiseMainData()}
+          </div>
+        </div>
         <Footer />
       </div>
     )

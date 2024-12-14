@@ -1,13 +1,13 @@
 .individual-state-route-main-container {
   background-color: #161625;
   color: #faf5f9;
-  height: 100vh;
+  min-height: 100vh;
 }
 .state-name-tested-details-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 80px;
+  padding: 0px 150px;
 }
 .state-name-last-updated-container {
   display: flex;
@@ -16,6 +16,7 @@
   align-items: flex-start;
   line-height: 0px;
 }
+
 .main-state-name {
   color: #0ea5e9;
   background-color: #0284c729;
@@ -32,4 +33,59 @@
   color: #94a3b8;
   align-self: flex-end;
   font-size: 15px;
+}
+
+/* State Card */
+.state-wise-data-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.state-wise-cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #fafafa;
+}
+
+.state-cards-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 150px;
+  width: 100%;
+}
+
+/* Top Districts */
+
+.top-districts-main-container {
+  padding: 0px 150px;
+}
+.top-districts-title {
+  color: #ff073a;
+}
+
+.top-districts-main-list-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+@media screen and (max-width: 767px) {
+  .top-districts-main-container {
+    padding: 0px 80px;
+  }
+  .top-districts-main-list-container {
+    padding: 0px 100px;
+  }
+  .top-districts-title {
+    padding: 0px 100px;
+  }
 }

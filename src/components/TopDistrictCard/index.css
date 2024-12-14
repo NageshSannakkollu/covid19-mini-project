@@ -1,0 +1,15 @@
+.top-district-list-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 180px;
+}
+.district-value {
+  font-weight: 400;
+  font-size: 12px;
+}
+.district-name {
+  width: 70px;
+}

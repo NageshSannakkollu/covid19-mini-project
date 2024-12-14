@@ -1,0 +1,29 @@
+.not-found-container {
+  background-color: #161625;
+  min-height: 100vh;
+  color: #fafafa;
+}
+.not-found-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.not-found-inside-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.not-found-image {
+  width: 320px;
+  height: 250px;
+}
+.home-button {
+  padding: 5px 15px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: 0px;
+  border-radius: 8px;
+}

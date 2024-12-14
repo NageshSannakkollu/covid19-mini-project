@@ -1,0 +1,95 @@
+.state-card-un-ordered-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0px;
+  padding-left: 0px;
+  list-style-type: none;
+  width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .state-card-un-ordered-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 700px;
+  }
+  .card-details-list {
+    margin-bottom: 20px;
+  }
+}
+.card-details-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-details-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #ff073a;
+  height: 180px;
+  width: 200px;
+  background-color: #331427;
+}
+
+.active-details-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #007bff;
+  height: 180px;
+  width: 200px;
+  background-color: #132240;
+  border-radius: 8px;
+}
+
+.recover-details-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #28a745;
+  height: 180px;
+  width: 200px;
+  background-color: #182829;
+  border-radius: 8px;
+}
+
+.decease-details-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #6c757d;
+  height: 180px;
+  width: 200px;
+  background-color: #212230;
+}
+
+@media screen and (max-width: 767px) {
+  .confirm-details-list {
+    height: 160px;
+    width: 200px;
+  }
+  .decease-details-list {
+    height: 160px;
+    width: 200px;
+  }
+  .recover-details-list {
+    height: 160px;
+    width: 200px;
+  }
+  .active-details-list {
+    height: 160px;
+    width: 200px;
+  }
+}

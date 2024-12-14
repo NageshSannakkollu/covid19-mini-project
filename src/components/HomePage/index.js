@@ -1,4 +1,8 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
+import {BsSearch} from 'react-icons/bs'
+import {BiChevronRightSquare} from 'react-icons/bi'
+import {FcGenericSortingDesc, FcGenericSortingAsc} from 'react-icons/fc'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
@@ -181,6 +185,7 @@ class HomePage extends Component {
     const apiUrl = 'https://apis.ccbp.in/covid19-state-wise-data'
     const options = {method: 'GET'}
     const response = await fetch(apiUrl, options)
+    console.log('Response:', response)
     if (response.ok) {
       const responseData = await response.json()
       let confirmedCases = 0
@@ -234,7 +239,7 @@ class HomePage extends Component {
   }
 
   renderLoadingView = () => (
-    <div className="loader-main-container">
+    <div className="loader-main-container" testid="homeRouteLoader">
       <div className="loader-container" data-testid="loader">
         <Loader type="TailSpin" color="#faf5f9" height={40} width={40} />
       </div>
@@ -266,31 +271,28 @@ class HomePage extends Component {
     const {covidData} = this.state
 
     return (
-      <div className="state-table-list-each-item-container">
+      <div
+        className="state-table-list-each-item-container"
+        testid="stateWiseCovidDataTable"
+      >
         <div className="state-tables-heading-container">
           <div className="state-ascending-descending-container state-name">
-            <p className="state-name-title ">State/UT</p>
+            <p className="state-name-title ">States/UT</p>
             <button
               type="button"
               className="asc-dsc-buttons"
               onClick={this.ascSort}
+              testid="ascendingSort"
             >
-              <img
-                src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733911366/sort-asc_lezzvj.png"
-                alt="asc"
-                className="order-image"
-              />
+              <FcGenericSortingAsc alt="asc" className="order-image" />
             </button>
             <button
               type="button"
               className="asc-dsc-buttons"
               onClick={this.descSort}
+              testid="descendingSort"
             >
-              <img
-                src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733911366/sort_uisehd.png"
-                alt="desc"
-                className="order-image"
-              />
+              <FcGenericSortingDesc alt="desc" className="order-image" />
             </button>
           </div>
           <p className="state-name-title confirm-numbers">Confirmed</p>
@@ -300,7 +302,10 @@ class HomePage extends Component {
           <p className="state-name-title confirm-numbers">Population</p>
         </div>
         <hr />
-        <ul className="un-ordered-state-list-container">
+        <ul
+          className="un-ordered-state-list-container"
+          testid="searchResultsUnorderedList"
+        >
           {covidData.map(eachState => (
             <StateList
               homeCovid19Details={eachState}
@@ -334,38 +339,50 @@ class HomePage extends Component {
     return (
       <div className="covid19-home-cards-container">
         <div className="covid19-home-inside-container">
-          <div className="confirm-cases-card">
-            <h3>Confirmed</h3>
+          <div
+            className="confirm-cases-card"
+            testid="countryWideConfirmedCases"
+          >
+            <p>Confirmed</p>
             <img
               src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733218626/check-mark_1_jpb7wd.png"
-              alt="confirmed"
+              alt="country wide confirmed cases pic"
               className=""
             />
             <h3>{totalConfirmed}</h3>
           </div>
-          <div className="confirm-cases-card active-card">
-            <h3>Active</h3>
+          <div
+            className="confirm-cases-card active-card"
+            testid="countryWideActiveCases"
+          >
+            <p>Active</p>
             <img
               src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733218625/protection_1_vs8wos.png"
-              alt="active"
+              alt="country wide active cases pic"
               className=""
             />
             <h3>{totalActive}</h3>
           </div>
-          <div className="confirm-cases-card recover-card">
-            <h3>Recovered</h3>
+          <div
+            className="confirm-cases-card recover-card"
+            testid="countryWideRecoveredCases"
+          >
+            <p>Recovered</p>
             <img
               src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733218628/recovered_1_jdl6ht.png"
-              alt="recovered"
+              alt="country wide recovered cases pic"
               className=""
             />
             <h3>{totalRecovered}</h3>
           </div>
-          <div className="confirm-cases-card decease-card">
-            <h3>Deceased</h3>
+          <div
+            className="confirm-cases-card decease-card"
+            testid="countryWideDeceasedCases"
+          >
+            <p>Deceased</p>
             <img
               src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733218626/breathing_1_bckaz5.png"
-              alt="deceased"
+              alt="country wide deceased cases pic"
               className=""
             />
             <h3>{totalDeceased}</h3>
@@ -388,8 +405,10 @@ class HomePage extends Component {
 
   render() {
     const {covidData, searchInput, showSearchSuggestions} = this.state
-    const inputSearchCovidData = covidData.filter(eachState =>
-      eachState.stateName.toLowerCase().includes(searchInput.toLowerCase()),
+    const inputSearchCovidData = covidData.filter(
+      eachState =>
+        eachState.stateName.toLowerCase().includes(searchInput.toLowerCase()) ||
+        eachState.stateCode.toLowerCase().includes(searchInput.toLowerCase()),
     )
     console.log('inputSearchCovidData:', inputSearchCovidData)
     return (
@@ -398,32 +417,33 @@ class HomePage extends Component {
         <div className="main-home-container">
           <div className="search-input-main-container">
             <div className="search-icon-input-container">
-              <img
-                src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733216880/search_fxxwj2.png"
-                alt="search"
-                className="search-icon"
-              />
+              <BsSearch alt="search" className="search-icon" />
               <input
                 type="search"
                 className="search-input"
                 placeholder="Enter the State"
                 onChange={this.onChangeSearchState}
+                testid="searchResultsUnorderedList"
               />
             </div>
           </div>
           {showSearchSuggestions ? (
-            <ul className="search-suggestion-main-container">
+            <ul
+              className="search-suggestion-main-container"
+              testid="searchResultsUnorderedList"
+            >
               {inputSearchCovidData.map(eachState => (
                 <li className="suggestions-list-container">
                   <p>{eachState.stateName}</p>
-                  <div className="state-code-suggestion-container">
-                    <p className="state-code">{eachState.stateCode}</p>
-                    <img
-                      src="https://res.cloudinary.com/dksgsqhdk/image/upload/v1733925839/Line_l5oqdh.png"
-                      alt="suggestion"
-                      className="suggestion-image"
-                    />
-                  </div>
+                  <Link to={`/state/${eachState.stateCode}`}>
+                    <div className="state-code-suggestion-container">
+                      <p className="state-code">{eachState.stateCode}</p>
+                      <BiChevronRightSquare
+                        alt="suggestion"
+                        className="suggestion-image"
+                      />
+                    </div>
+                  </Link>
                 </li>
               ))}
             </ul>

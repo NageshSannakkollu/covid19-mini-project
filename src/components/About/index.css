@@ -1,0 +1,19 @@
+.about-main-container {
+  background-color: #161625;
+  color: #faf5f9;
+  min-height: 100vh;
+}
+
+.about-inside-container {
+  padding: 0px 100px;
+}
+.about-faqs-list-container {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+.about-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

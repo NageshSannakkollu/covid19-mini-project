@@ -1,0 +1,20 @@
+.question-category-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.question {
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 15px;
+}
+.category {
+  border: 1px solid #94a3b8;
+  padding: 2px 20px;
+  border-radius: 12px;
+}
+.answer {
+  color: #007bff;
+  font-weight: 500;
+  font-size: 12px;
+}
